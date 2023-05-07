@@ -1,0 +1,108 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb
+    build: requirements/mariadb
+    container_name: mariadb
+    ports:
+      - "3306"
+    volumes:
+        - wp-db:/var/lib/mysql/wordpress
+    networks:
+      - mynetwork
+    env_file:
+      - .env
+    restart: always
+  wordpress:
+    image: wordpress
+    build: requirements/wordpress
+    container_name: wordpress
+    ports:
+      - "9000"
+    volumes:
+        - wp-files:/var/www/html
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - mynetwork
+  ftp:
+    image: ftp
+    build: requirements/bonus/ftp
+    container_name: ftp
+    depends_on:
+      - mariadb
+      - wordpress
+    ports:
+      - "20:20"
+      - "21:21"
+    restart: always
+    volumes:
+        - wp-files:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - mynetwork
+  redis:
+    image: redis
+    build: requirements/bonus/redis
+    container_name: redis
+    depends_on:
+      - mariadb
+      - wordpress
+    ports:
+      - "6379"
+    restart: always
+    networks:
+      - mynetwork
+  adminer:
+    image: adminer
+    build: requirements/bonus/adminer
+    container_name: adminer
+    depends_on:
+      - mariadb
+      - wordpress
+    ports:
+      - "5000:5000"
+    restart: always
+    networks:
+      - mynetwork
+  nginx:
+    image: nginx
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+        - wp-files:/var/www/html
+    depends_on:
+      - mariadb
+      - wordpress
+    restart: always
+    networks:
+      - mynetwork
+  portfolio:
+    image: portfolio
+    build: requirements/bonus/portfolio
+    container_name: portfolio
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - mynetwork
+volumes:
+  wp-db:
+    driver_opts:
+      type: none
+      device: /home/ynoam/data/wp-db
+      o: bind
+  wp-files:
+    driver_opts:
+      type: none
+      device: /home/ynoam/data/wp-files
+      o: bind
+
+networks:
+  mynetwork:
