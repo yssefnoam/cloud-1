@@ -1,0 +1,7 @@
+all:
+  children:
+    webservers:
+      hosts:
+        web1.ynoam.com:
+          ansible_host: 188.166.163.185
+          ansible_user: root
