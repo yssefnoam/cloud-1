@@ -1,3 +1,4 @@
+# TODO: refactore this docker-compose and remove unnecesary services like ftp
 version: "3"
 services:
   mariadb:
@@ -28,35 +29,6 @@ services:
     restart: always
     networks:
       - mynetwork
-  ftp:
-    image: ftp
-    build: requirements/bonus/ftp
-    container_name: ftp
-    depends_on:
-      - mariadb
-      - wordpress
-    ports:
-      - "20:20"
-      - "21:21"
-    restart: always
-    volumes:
-        - wp-files:/var/www/html
-    env_file:
-      - .env
-    networks:
-      - mynetwork
-  redis:
-    image: redis
-    build: requirements/bonus/redis
-    container_name: redis
-    depends_on:
-      - mariadb
-      - wordpress
-    ports:
-      - "6379"
-    restart: always
-    networks:
-      - mynetwork
   adminer:
     image: adminer
     build: requirements/bonus/adminer
@@ -80,15 +52,6 @@ services:
     depends_on:
       - mariadb
       - wordpress
-    restart: always
-    networks:
-      - mynetwork
-  portfolio:
-    image: portfolio
-    build: requirements/bonus/portfolio
-    container_name: portfolio
-    ports:
-      - "8080:8080"
     restart: always
     networks:
       - mynetwork

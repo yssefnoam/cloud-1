@@ -1,6 +1,7 @@
-FROM ynoam_debian
+FROM debian:buster
 
-RUN apt-get install -y mariadb-server procps
+RUN apt update
+RUN apt-get install -y mariadb-server procps vim
 COPY cnf/* /
 RUN mv /my.cnf /etc/mysql/mariadb.conf.d
 RUN chown mysql:mysql /etc/mysql/mariadb.conf.d/my.cnf

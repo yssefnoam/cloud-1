@@ -1,8 +1,9 @@
-FROM ynoam_debian
+FROM debian:buster
 
 RUN apt-get install -y php-fpm php-gd php-mysql php-cli \
 	php-common php-curl php-opcache php-json php-imap php-mbstring php-xml \
-	wget mariadb-client
+	wget mariadb-client vim
+
 COPY cnf/latest.tar.gz /
 RUN tar -xvf /latest.tar.gz
 RUN mkdir -p  /var/www/html
