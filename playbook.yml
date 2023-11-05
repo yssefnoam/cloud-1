@@ -1,0 +1,10 @@
+---
+- hosts: server
+  become: true
+  tasks:
+  - name: install docker
+    apt:
+      pkg:
+      - docker.io
+      - docker-compose
+      update_cache: yes

@@ -1,7 +1,6 @@
 all:
-  children:
-    webservers:
-      hosts:
-        web1.ynoam.com:
-          ansible_host: 188.166.163.185
-          ansible_user: root
+  hosts:
+    server:
+      ansible_host: 3.135.206.121
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/1337-key-linux.pem

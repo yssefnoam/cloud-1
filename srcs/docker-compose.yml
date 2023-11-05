@@ -29,18 +29,6 @@ services:
     restart: always
     networks:
       - mynetwork
-  adminer:
-    image: adminer
-    build: requirements/bonus/adminer
-    container_name: adminer
-    depends_on:
-      - mariadb
-      - wordpress
-    ports:
-      - "5000:5000"
-    restart: always
-    networks:
-      - mynetwork
   nginx:
     image: nginx
     build: requirements/nginx
@@ -55,17 +43,6 @@ services:
     restart: always
     networks:
       - mynetwork
-volumes:
-  wp-db:
-    driver_opts:
-      type: none
-      device: /home/ynoam/data/wp-db
-      o: bind
-  wp-files:
-    driver_opts:
-      type: none
-      device: /home/ynoam/data/wp-files
-      o: bind
 
 networks:
   mynetwork:
