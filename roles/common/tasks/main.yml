@@ -1,0 +1,27 @@
+---
+- name: upload srcs
+  copy:
+    src: "srcs/"
+    dest: "{{ app_dir }}/"
+
+- name: install docker and docker-compose
+  apt:
+    pkg:
+    - docker.io
+    - docker-compose
+    update_cache: yes
+
+# - name: upload docker-compose file
+#   copy:
+#     src: "srcs/docker-compose.yml"
+#     dest: "{{ app_dir }}/"
+
+- name: Generate .env file
+  template:
+    src: templates/.env.j2
+    dest:  "{{ app_dir }}/.env"
+
+- name: run services
+  shell: "docker-compose -f docker-compose.yml up -d"
+  args:
+    chdir: "{{ app_dir }}"

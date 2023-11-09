@@ -1,0 +1,6 @@
+---
+- name: Ensure the Nginx service is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes

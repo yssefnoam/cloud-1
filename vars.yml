@@ -1,0 +1,7 @@
+app_dir: /app/
+database_root_password: toor
+database_user: wordpress
+database_password: wordpress1234
+database_name: wordpress
+wp_user: ynoam
+wp_password: ynoam

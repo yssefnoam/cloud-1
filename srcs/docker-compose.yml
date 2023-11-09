@@ -1,4 +1,3 @@
-# TODO: refactore this docker-compose and remove unnecesary services like ftp
 version: "3"
 services:
   mariadb:
@@ -8,12 +7,13 @@ services:
     ports:
       - "3306"
     volumes:
-        - wp-db:/var/lib/mysql/wordpress
+        - wp-db:/var/lib/mysql
     networks:
       - mynetwork
     env_file:
       - .env
     restart: always
+
   wordpress:
     image: wordpress
     build: requirements/wordpress
@@ -29,12 +29,14 @@ services:
     restart: always
     networks:
       - mynetwork
+
   nginx:
     image: nginx
     build: requirements/nginx
     container_name: nginx
     ports:
       - "443:443"
+      - "80:80"
     volumes:
         - wp-files:/var/www/html
     depends_on:
@@ -46,3 +48,6 @@ services:
 
 networks:
   mynetwork:
+volumes:
+  wp-db:
+  wp-files:

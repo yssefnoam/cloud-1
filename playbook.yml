@@ -1,10 +1,19 @@
 ---
 - hosts: server
   become: true
+  vars_files:
+    - vars.yml
   tasks:
-  - name: install docker
-    apt:
-      pkg:
-      - docker.io
-      - docker-compose
-      update_cache: yes
+
+  - name: run services
+    include_role:
+      name: '{{ item }}'
+    with_items:
+      # - "common"
+      # - "db"
+      - "wordpress"
+      # - "webserver"
+
+
+
+      # mysqladmin -h localhost -u root -ptoor ping

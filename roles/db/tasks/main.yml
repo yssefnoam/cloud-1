@@ -1,0 +1,26 @@
+---
+- name: wait for db container
+  retries: -1
+  delay: 5
+  shell: "docker-compose -f docker-compose.yml exec mariadb sh -c 'mysqladmin -h localhost -u root -p{{ database_root_password }} ping'"
+  args:
+    chdir: "{{ app_dir }}"
+  register: mysql_alive
+  until: mysql_alive.rc == 0
+
+- name: create db
+  shell: docker-compose -f docker-compose.yml exec -u root mariadb sh -c 'mysql -e "CREATE DATABASE $WP_DB_NAME;"'
+  args:
+    chdir: "{{ app_dir }}"
+  ignore_errors: true
+
+- name: create user 
+  shell: docker-compose -f docker-compose.yml exec -u root mariadb sh -c "mysql -e \"CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';\""
+  args:
+    chdir: "{{ app_dir }}"
+  ignore_errors: true
+
+- name: grant user privileges to db
+  shell: docker-compose -f docker-compose.yml exec -u root mariadb sh -c "mysql -e \"GRANT ALL PRIVILEGES ON {{ database_name }}.* TO '{{ database_user }}'@'%';\"" 
+  args:
+    chdir: "{{ app_dir }}"
