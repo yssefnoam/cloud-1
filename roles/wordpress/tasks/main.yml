@@ -1,31 +1,35 @@
 ---
+- name: download wordpress
+  shell: |
+      docker-compose -f docker-compose.yml exec wordpress \
+       sh -c "/wp --allow-root core download"
+  args:
+    chdir: "{{ app_dir }}"
+  ignore_errors: true
+
 - name: generate wp-config.php
   shell: |
-    docker-compose -f docker-compose.yml exec wordpress sh -c '/wp --allow-root config create \
-      --dbuser={{ database_user }} \
-      --dbpass={{ database_password }} \
-      --dbhost=mariadb \
-      --dbname={{ database_name }} \
-      --skip-check'
+      docker-compose -f docker-compose.yml exec wordpress \
+       sh -c "/wp --allow-root config create \
+        --dbuser={{ database_user }} \
+        --dbpass={{ database_password }} \
+        --dbhost=mariadb \
+        --dbname={{ database_name }} \
+        --skip-check --extra-php <<PHP
+           define('WP_SITEURL', 'https://{{ hostvars[inventory_hostname]['ansible_host'] }}');
+           "
   args:
     chdir: "{{ app_dir }}"
   ignore_errors: true
 
 - name: generate wordpress site
   shell: |
-    docker-compose -f docker-compose.yml exec wordpress sh -c "/wp --allow-root core install \
+    docker-compose -f docker-compose.yml exec wordpress \
+     sh -c "/wp --allow-root core install \
       --url={{ hostvars[inventory_hostname]['ansible_host'] }} \
-      --title=inception \
+      --title=YNOAM \
       --admin_user={{ wp_user }} \
       --admin_password={{ wp_password }} \
-      --admin_email=youssef@ynoam.com \
-      --exec=define('WP_SITEURL', '{{ hostvars[inventory_hostname]['ansible_host'] }}');"
+      --admin_email=youssef@ynoam.com "
   args:
     chdir: "{{ app_dir }}"
-  # ignore_errors: true
-
-# - name: install wordpress site
-#   shell: docker-compose -f docker-compose.yml exec wordpress sh -c '/wp --allow-root config create --dbuser={{ database_user }} --dbpass={{ database_password }} --dbhost=mariadb --dbname={{ database_name }} --skip-check'
-#   args:
-#     chdir: "{{ app_dir }}"
-#   ignore_errors: true
