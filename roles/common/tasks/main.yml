@@ -11,11 +11,6 @@
     - docker-compose
     update_cache: yes
 
-# - name: upload docker-compose file
-#   copy:
-#     src: "srcs/docker-compose.yml"
-#     dest: "{{ app_dir }}/"
-
 - name: Generate .env file
   template:
     src: templates/.env.j2

@@ -18,4 +18,6 @@
 
 '/wp --allow-root config create --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb --dbname=wordpress --skip-check'
 
-'/wp --allow-root core install --url={{ ansible_default_ipv4.address }} --title=inception --admin_user=$WP_USER --admin_password=$WP_PASSWORD --admin_email=youssef@ynoam.com --exec="define('WP_SITEURL', '{{ ansible_default_ipv4.address }}');"'
+'/wp --allow-root core install --url={{ ansible_default_ipv4.address }}\
+ --title=inception --admin_user=$WP_USER --admin_password=$WP_PASSWORD \
+ --admin_email=youssef@ynoam.com --exec="define('WP_SITEURL', '{{ ansible_default_ipv4.address }}');"'

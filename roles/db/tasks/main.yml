@@ -4,7 +4,7 @@
   delay: 5
   shell: |
       docker-compose -f docker-compose.yml exec mariadb \
-       sh -c 'mysqladmin -h localhost -u root -p{{ database_root_password }} ping'
+       sh -c 'mysqladmin ping'
   args:
     chdir: "{{ app_dir }}"
   register: mysql_alive
@@ -13,7 +13,7 @@
 - name: create db
   shell: |
       docker-compose -f docker-compose.yml exec -u root mariadb \
-       sh -c 'mysql -e "CREATE DATABASE $WP_DB_NAME;"'
+       sh -c 'mysql -e "CREATE DATABASE {{ database_name }};"'
   args:
     chdir: "{{ app_dir }}"
   ignore_errors: true
@@ -21,7 +21,7 @@
 - name: create user 
   shell: |
       docker-compose -f docker-compose.yml exec -u root mariadb \
-       sh -c "mysql -e \"CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';\""
+       sh -c "mysql -e \"CREATE USER '{{ database_name }}'@'%' IDENTIFIED BY '{{ database_password}}';\""
   args:
     chdir: "{{ app_dir }}"
   ignore_errors: true
