@@ -9,8 +9,8 @@
     include_role:
       name: '{{ item }}'
     with_items:
-      # - "common"
-      # - "db"
+      - "common"
+      - "db"
       - "wordpress"
       # - "webserver"
 
