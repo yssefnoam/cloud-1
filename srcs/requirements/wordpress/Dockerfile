@@ -14,6 +14,8 @@ WORKDIR /var/www/html
 RUN wget  https://files.phpmyadmin.net/phpMyAdmin/4.9.4/phpMyAdmin-4.9.4-all-languages.tar.gz
 RUN tar -xvf phpMyAdmin-4.9.4-all-languages.tar.gz
 RUN mv phpMyAdmin-4.9.4-all-languages phpmyadmin
+RUN cp config.sample.inc.php config.inc.php
+RUN sed -i 's/localhost/mariadb/g' phpmyadmin/config.sample.inc.php
 
 COPY cnf/www.conf /etc/php/7.3/fpm/pool.d
 COPY cnf/setup.sh /
