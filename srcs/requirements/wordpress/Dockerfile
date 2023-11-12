@@ -18,7 +18,6 @@ RUN cp phpmyadmin/config.sample.inc.php phpmyadmin/config.inc.php
 RUN sed -i 's/localhost/mariadb/g' phpmyadmin/config.inc.php
 
 COPY cnf/www.conf /etc/php/7.3/fpm/pool.d
-COPY cnf/setup.sh /
 RUN mkdir -p /run/php 
 COPY cnf/wp /
 RUN chmod +x /wp
