@@ -12,7 +12,7 @@
       - "common"
       - "db"
       - "wordpress"
-      # - "webserver"
+      - "webserver"
 
 
 
