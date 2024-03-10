@@ -1,2 +1,2 @@
 # cloud-1
-Automate inception deployment.
+Automate Wordpress deployment (inception).
