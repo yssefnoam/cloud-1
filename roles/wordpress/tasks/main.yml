@@ -27,9 +27,9 @@
     docker-compose -f docker-compose.yml exec wordpress \
      sh -c "/wp --allow-root core install \
       --url={{ hostvars[inventory_hostname]['ansible_host'] }} \
-      --title=YNOAM \
+      --title={{ wp_site_name }} \
       --admin_user={{ wp_user }} \
       --admin_password={{ wp_password }} \
-      --admin_email=youssef@ynoam.com "
+      --admin_email={{ wp_email }} "
   args:
     chdir: "{{ app_dir }}"
