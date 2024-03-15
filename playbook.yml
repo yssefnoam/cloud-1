@@ -5,8 +5,8 @@
     - vars.yml
   tasks:
   - name: Check if variables exist and are not null
-      assert:
-        that:
+    assert:
+      that:
           - app_dir is defined
           - app_dir is not none
           - database_user is defined
@@ -23,7 +23,7 @@
           - wp_site_name is not none
           - wp_email is defined
           - wp_email is not none
-        fail_msg: "One or more variables are not defined or are null"
+      fail_msg: "One or more variables are not defined or are null"
 
   - name: run services
     include_role:
