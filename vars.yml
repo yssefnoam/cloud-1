@@ -4,3 +4,5 @@ database_password: wordpress1234
 database_name: wordpress
 wp_user: ynoam
 wp_password: ynoam
+wp_site_name: cloudone
+wp_email: "{{ wp_user }}@{{ wp_site_name }}.com"
