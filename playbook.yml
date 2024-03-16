@@ -73,7 +73,7 @@
 
   - name: delete all component
     shell: |
-        rm -fr {{ app_dir }}/*
+        rm -fr {{ app_dir }}/* {{ app_dir }}/.env
     args:
       chdir: "{{ app_dir }}"
     ignore_errors: true

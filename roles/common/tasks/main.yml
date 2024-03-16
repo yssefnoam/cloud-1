@@ -1,6 +1,6 @@
 ---
 - name: upload srcs
-  copy:
+  synchronize:
     src: "srcs/"
     dest: "{{ app_dir }}/"
 
