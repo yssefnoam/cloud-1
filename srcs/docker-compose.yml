@@ -30,6 +30,18 @@ services:
     networks:
       - mynetwork
 
+  phpmyadmin:
+    image: phpmyadmin
+    build: requirements/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "9000"
+    volumes:
+        - wp-files:/var/www/html
+    restart: always
+    networks:
+      - mynetwork
+
   nginx:
     image: nginx
     build: requirements/nginx

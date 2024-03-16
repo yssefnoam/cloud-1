@@ -28,12 +28,54 @@
   - name: run services
     include_role:
       name: '{{ item }}'
+      apply:
+        tags:
+          - install
     with_items:
       - "common"
       - "db"
       - "wordpress"
-      # - "webserver"
-
+      - "webserver"
+      - "phpmyadmin"
+    tags:
+      - install
+      - all
+      
 
 
       # mysqladmin -h localhost -u root -ptoor ping
+  - name: docker-compose down
+    shell: |
+        docker-compose down  
+    args:
+      chdir: "{{ app_dir }}"
+    tags:
+      - delete
+    ignore_errors: true
+
+  - name: remove services images
+    shell: |
+        docker rmi $(docker images -aq) 
+    args:
+      chdir: "{{ app_dir }}"
+    tags:
+      - delete
+    ignore_errors: true
+
+  - name: delete services volumes
+    shell: |
+        docker volume rm $(docker volume ls -q) 
+    args:
+      chdir: "{{ app_dir }}"
+    tags:
+      - delete
+    ignore_errors: true
+
+  - name: delete all component
+    shell: |
+        rm -fr {{ app_dir }}/*
+    args:
+      chdir: "{{ app_dir }}"
+    ignore_errors: true
+    tags:
+      - delete

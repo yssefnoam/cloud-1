@@ -1,6 +1,5 @@
 ---
-- name: Ensure the Nginx service is running
-  service:
-    name: nginx
-    state: started
-    enabled: yes
+- name: run service
+  shell: "docker-compose -f docker-compose.yml up -d nginx"
+  args:
+    chdir: "{{ app_dir }}"

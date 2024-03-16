@@ -1,4 +1,9 @@
 ---
+- name: run service
+  shell: "docker-compose -f docker-compose.yml up -d mariadb "
+  args:
+    chdir: "{{ app_dir }}"
+
 - name: wait for db container
   retries: -1
   delay: 5

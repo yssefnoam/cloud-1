@@ -1,0 +1,5 @@
+---
+- name: run service
+  shell: "docker-compose -f docker-compose.yml up -d phpmyadmin"
+  args:
+    chdir: "{{ app_dir }}"

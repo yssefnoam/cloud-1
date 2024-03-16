@@ -1,6 +1,25 @@
 FROM debian:buster
 
-RUN apt update
-RUN apt-get install -y php-fpm php-mysql  wget vim
-RUN wget https://www.adminer.org/latest.php && mv latest.php index.php
-CMD php -S 0.0.0.0:5000 /index.php  
+RUN apt-get update
+RUN apt-get install -y php-fpm \
+ 						php-gd \
+						php-mysql \
+						php-cli \
+						php-common \
+						php-curl \
+						php-opcache \
+						php-json \
+						php-imap \
+						php-mbstring \
+						php-xml \
+						wget
+RUN wget  https://files.phpmyadmin.net/phpMyAdmin/4.9.4/phpMyAdmin-4.9.4-all-languages.tar.gz
+RUN tar -xvf phpMyAdmin-4.9.4-all-languages.tar.gz
+RUN mv phpMyAdmin-4.9.4-all-languages phpmyadmin
+RUN cp phpmyadmin/config.sample.inc.php phpmyadmin/config.inc.php
+RUN sed -i 's/localhost/mariadb/g' phpmyadmin/config.inc.php
+
+COPY cnf/www.conf /etc/php/7.3/fpm/pool.d
+RUN mkdir -p /run/php 
+
+CMD ["php-fpm7.3", "-F"]

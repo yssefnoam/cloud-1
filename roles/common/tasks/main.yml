@@ -16,7 +16,7 @@
     src: templates/.env.j2
     dest:  "{{ app_dir }}/.env"
 
-- name: run services
-  shell: "docker-compose -f docker-compose.yml up -d"
-  args:
-    chdir: "{{ app_dir }}"
+# - name: run services
+#   shell: "docker-compose -f docker-compose.yml up -d"
+#   args:
+#     chdir: "{{ app_dir }}"

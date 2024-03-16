@@ -1,4 +1,9 @@
 ---
+- name: run service
+  shell: "docker-compose -f docker-compose.yml up -d wordpress"
+  args:
+    chdir: "{{ app_dir }}"
+
 - name: download wordpress
   shell: |
       docker-compose -f docker-compose.yml exec wordpress \
