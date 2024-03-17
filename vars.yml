@@ -1,8 +1,8 @@
 app_dir: /app/
-database_user: wordpress
-database_password: wordpress1234
-database_name: wordpress
-wp_user: ynoam
-wp_password: ynoam
-wp_site_name: cloudone
-wp_email: "{{ wp_user }}@{{ wp_site_name }}.com"
+database_user: 
+database_password: 
+database_name: 
+wp_user: 
+wp_password: 
+wp_site_name: 
+wp_email: 
