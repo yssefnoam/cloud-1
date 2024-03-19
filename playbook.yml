@@ -55,7 +55,7 @@
 
   - name: remove services images
     shell: |
-        docker rmi $(docker images -aq) 
+        docker rmi -f $(docker images -aq) 
     args:
       chdir: "{{ app_dir }}"
     tags:
