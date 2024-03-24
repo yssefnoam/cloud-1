@@ -26,7 +26,7 @@
 - name: create user 
   shell: |
       docker-compose -f docker-compose.yml exec -u root mariadb \
-       sh -c "mysql -e \"CREATE USER '{{ database_name }}'@'%' IDENTIFIED BY '{{ database_password}}';\""
+       sh -c "mysql -e \"CREATE USER '{{ database_user }}'@'%' IDENTIFIED BY '{{ database_password}}';\""
   args:
     chdir: "{{ app_dir }}"
   ignore_errors: true
